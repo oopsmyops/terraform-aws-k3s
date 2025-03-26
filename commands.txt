@@ -1,0 +1,17 @@
+INSTANCE_ID=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=k3s-spot-cluster" --query "Reservations[].Instances[?State.Name == 'running'].InstanceId[]" --output text)
+aws ssm send-command \
+    --document-name "AWS-RunShellScript" \
+    --instance-ids $INSTANCE_ID \
+    --parameters 'commands=["sudo nohup kubectl -n crossplane-system port-forward $(kubectl get pods -n crossplane-system -l app.kubernetes.io/name=komoplane,app.kubernetes.io/instance=komoplane -o jsonpath={.items[0].metadata.name}) 8090:8090 > /dev/null 2>&1"]' | cat
+aws ssm start-session --target $INSTANCE_ID --document-name AWS-StartPortForwardingSession --parameters '{"portNumber":["8090"],"localPortNumber":["8090"]}'
+
+
+watch '(crossplane beta trace vpcclaims.aws.cloud.iac/crossplane-vpc; crossplane beta trace eksclaim.aws.cloud.iac/crossplane-eks-cluster; crossplane beta trace appclaim.aws.cloud.iac/game-2048)'
+
+watch "crossplane beta trace vpcclaims.aws.cloud.iac/crossplane-vpc"
+
+watch "crossplane beta trace eksclaim.aws.cloud.iac/crossplane-eks-cluster"
+
+watch "kubectl get managed"
+
+aws eks update-kubeconfig --name crossplane-eks-cluster --kubeconfig /root/kubeconfig
