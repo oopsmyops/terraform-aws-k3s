@@ -1,6 +1,6 @@
 # Terraform AWS K3s
 
-This repository provides Terraform configurations to deploy and manage a K3s cluster on AWS. It uses Terraform modules to provision infrastructure components such as EC2 instances, VPCs, security groups, and NAT gateways.
+This repository provides Terraform configurations to deploy and manage a K3s cluster on AWS. It leverages Terraform modules to provision infrastructure components such as EC2 instances, VPCs, security groups, and NAT gateways.
 
 ## Folder Structure
 
@@ -12,6 +12,7 @@ This repository provides Terraform configurations to deploy and manage a K3s clu
 - **`data.tf`**: Includes data sources used in the configuration.
 
 ## Usage
+
 1. **Pre-requisites**:
     - Install [Terraform](https://www.terraform.io/downloads.html).
     - Configure AWS CLI with appropriate credentials.
@@ -25,13 +26,14 @@ This repository provides Terraform configurations to deploy and manage a K3s clu
     ```
 
 ## Modules
+
 This repository uses the following modules:
 - **VPC Module**: Provisions the Virtual Private Cloud (VPC) and subnets.
 - **EC2 Module**: Manages the EC2 instances for the K3s cluster.
 - **Security Group Module**: Configures security groups for network access control.
 - **NAT Instance Module**: Sets up NAT instance for internet access.
 
-## Outputs  
+## Outputs
 
 ### VPC Outputs
 - **`vpc_id`**: The ID of the VPC.
@@ -102,6 +104,7 @@ This repository uses the following modules:
 - **`security_group_arn`**: The ARN of the security group.
 - **`security_group_id`**: The ID of the security group.
 - **`security_group_name`**: The name of the security group.
+
 ## Notes
 
 - **Secure State File**: Ensure that the Terraform state file (`terraform.tfstate`) is stored securely, as it contains sensitive information.
@@ -118,3 +121,7 @@ This repository uses the following modules:
 - **Monitor Costs**: Regularly monitor AWS costs to ensure that resources provisioned by Terraform are within budget.
 - **Documentation**: Maintain up-to-date documentation for the Terraform configurations and workflows to facilitate team collaboration and onboarding.
 
+## Acknowledgments
+
+- **Terraform**: The open-source tool for infrastructure as code.
+- **K3s**: Lightweight Kubernetes distribution.
